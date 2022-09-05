@@ -76,7 +76,7 @@ Deploying to **TEST** network
 * Obtained router address from: https://github.com/VeRocket/uni-v2
 
 ```shell
- yarn call Exchange setExchangeRouter 0x91e42759290239a62ac757cf85bb5b74ace57927
+$ yarn call Exchange setExchangeRouter 0x91e42759290239a62ac757cf85bb5b74ace57927
 yarn run v1.22.17
 $ node scripts/contract-call.js Exchange setExchangeRouter 0x91e42759290239a62ac757cf85bb5b74ace57927
 
