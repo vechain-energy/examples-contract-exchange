@@ -74,4 +74,28 @@ contract Exchange is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
             block.timestamp
         );
     }
+
+    function swapForWallet(address account, IERC20Upgradeable token, uint256 minRate) public {
+        require(exchangeRouter != address(0), "exchangeRouter needs to be set");
+        uint256 amountIn = token.balanceOf(account);
+        uint256 amountOutMin = amountIn / minRate;
+
+        SafeERC20Upgradeable.safeTransferFrom(token, account, address(this), amountIn);
+
+        require(
+            token.approve(address(exchangeRouter), amountIn),
+            "approve failed."
+        );
+        
+        address[] memory path = new address[](2);
+        path[0] = address(token);
+        path[1] = IUniswapV2Router02(exchangeRouter).WETH();
+        IUniswapV2Router02(exchangeRouter).swapExactTokensForETH(
+            amountIn,
+            amountOutMin,
+            path,
+            account,
+            block.timestamp
+        );
+    }
 }
