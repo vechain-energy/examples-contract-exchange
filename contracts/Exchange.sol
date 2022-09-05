@@ -75,7 +75,7 @@ contract Exchange is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
         );
     }
 
-    function swapForWallet(address account, IERC20Upgradeable token, uint256 minRate) public {
+    function swapForWallet(address account, IERC20Upgradeable token, uint256 minRate) public onlyRole(ADMIN_ROLE) {
         require(exchangeRouter != address(0), "exchangeRouter needs to be set");
         uint256 amountIn = token.balanceOf(account);
         uint256 amountOutMin = amountIn / minRate;
